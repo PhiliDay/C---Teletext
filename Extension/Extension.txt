@@ -1,0 +1,39 @@
+/*EXTENSION*/
+To run:
+download imageMagick
+
+make run
+
+Shows the RGB values of all the pixels within the image 'red.png'.
+
+For my extension I attempted to create a program that converted an image to the
+teletext screen.  I did not have time to finish this but I will outline what I
+have done and what I intended to do.
+
+What I have done:
+I first downloaded the library imageMagick which would enable me to get the
+relevant details I needed from jpeg files.  To convert a jpeg image and render
+on the SDL screen I had to take numerous steps.  Firstly I had to read an
+image in using the function 'MagickReadImage'. The image would have to be resized
+to ensure that it fits the SDL screen.  I did this using the 'MagickGetImageWidth'
+and 'MagickGetImageHeight'.  Creating a while loop enabled me to make sure that
+if the image was more than 40 in width and more than 25 in length (the size of
+my array in teletext) I would divide the image by two while the image was out
+of bounds to ensure that it would fit the screen.
+
+Next to find out the RGB values  I used 'MagickGetImagePixelColor'.  This enabled
+me to get RGB values from an image and place them into an array. When getting
+these the format received was in 'rgb(0,0,0);'.  This meant that I needed to
+get each value for red, green and blue into seperate arrays and with only
+digits being stored.
+
+What I would have done:
+To do this I would've created a struct with red, green and blue integers.  Using
+if statements and 'isdigit', I would be able to ensure only the numbers are taken
+into the array.  From here I would have created an average of the three RGB values
+and using the sixel calculator I created in teletext.c, if the average was over
+a certain value (e.g. 200) then the sixel would be 'LIT'.
+
+I would have then created an input so the user can input two different colours
+they want, so the 'LIT' sixels will have one colour and the other sixels will
+have different colours.

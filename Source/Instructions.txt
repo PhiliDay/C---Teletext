@@ -1,0 +1,5 @@
+/*Teletext - Main*/
+
+To run test.m7, panda.m7, lfc.7:
+
+Make run

@@ -1,0 +1,107 @@
+/*TESTING*/
+To run:
+
+make run
+
+While I was building my code I used print statements within to see whether the
+correct values were outputted from the different functions.  Printing all the
+control codes in the teletext order throughout the build process enabled me to
+see what control codes needed to be activated to achieve the desired effect.
+To thoroughly test my code I decided to use numerous ways to investigate and
+check whether the conditions met many different combinations of the control codes.
+Originally to check whether the code worked I looked visually on the SDL window
+to see whether the output was what I wanted.  To be able to check the correct
+output within the code I decided to include tests within my functions.
+
+Testing I have done here is to ensure that the user doesn’t have to look at
+every aspect of their SDL window. I have picked at random different cells to
+test for the correct output.
+
+To begin my testing I made a copy of my original ‘teletext.c’ file and
+wrote numerous tests and asserts within the functions.  Throughout my code I
+used asserts to ensure that  the values being received in different functions
+were the values that I expected.  I thought that it was not necessary to use
+asserts to test the if statements as these in themselves would show whether or
+not the function was working properly.  Within the if statements, asserts were
+not needed as there would never be a false value for that if statement.  Below
+is a run through of all the different tests I have performed.
+
+Line 48 - 53: Test 1 - ensures that all the control codes are less than 128.
+Line 100: assert for holdFlag on.
+Line 104: assert for holdFlag off.
+Line 110: assert to ensure that the holdValue is the background colour needed
+for held graphics.
+Line 119: assert to check graphics mode is on.
+Line 124: assert to check holdFlag is on.
+Line 128: assert to check holdFlag is off.
+Line 136 - 143: Test 2 - Takes specific locations and checks to see if they are in the
+mode I expect them to be in (only works on test.m7).
+Line 165 - 170: asserts to see that the sixel locations have been correctly
+initialized.
+Line 175 - 180: asserts to ensure all the correct modes are on on each line.
+Line 187 - 202:  Test 3 - Chosen random locations in the test.m7 files and ensured
+the modes are correct and the teletext characters were correct.
+Line 229 - 235: Test 4 - Checking to see the new line modes are correct.
+Line 450 - 458: Testing to see if the sixels have been initialized to zero.
+Line 501 - 507: Checking to see if locations I know are double height within the
+test.m7 file are in the correct modes.
+Line 553: assert to see teletext have the correct values.
+Line 556: assert to ensure that the teletext value is set to the foreground.
+Line 560 + 567: same asserts as before but for graphics colours.
+Line 570: assert to ensure that the foreground code has been set to the before
+foreground.
+Line 575: assert to ensure that the previous foreground is then set to the
+current foreground.
+Line 584 - 603: similar asserts to before.
+Line 614 - 615: asserts to check the graphics mode and type mode in SEPERATED
+graphics.
+Line 62: assert to check that sw->finished is zero.
+
+/*
+/*Additional Testing File = "additionalTesting.c" - renders file 'testFile.m7'*/
+When ran some tests are incorrect as the modes are different within this file,
+ignore any fails */
+
+I have created a program which writes to an m7 file.  Here I have created a file
+called "testFile.m7".  In this file I have included different combinations
+of code to ensure that the program is working correctly.
+
+My testing successfully worked because I found a few bugs within my programme.
+Firstly I found that the original way I was working out my double height would
+have problems if there was three lines of double height.  This was due to the if
+statements I had included. I proceeded to change this and now it works.
+
+I problem that I couldn't find a solution for in time was that my held graphics
+does not reset when going onto a new line.  The problem is that when j == 0,
+the held graphics mode keeps the cell before in the array.  I tried numerous
+ways to resolve this but unfortunately could not find the answer in time.
+Although, this does prove that my testing was successful! (Lines 275 - 289)
+
+/*Simple Tests in additionalTesting.c*/
+
+Line 18 - 53:  Printing out different colour text and blocks.  This shows that
+all the alphanumeric/graphic modes work at the correct time and that colour
+is rendered correctly.
+Line 55 - 68: This prints double height.  It shows that the control code for
+double height has to be on both lines to be able to render correctly
+Line 70 - 91: Here shows the use of NEWBACKGROUND to set the old colour set to
+the background and then the forecolour with double height.  The output of the
+red background on line 2 is changed to black when blackbackground is called
+proving that this works.  When new background is called on line 1, it sets to
+the previous text colour.  This is then reset when there is a new line.
+Line 96 - 117:  I am testing the changing of graphics with continuous colours
+from contiguous mode to seperated mode.
+Line 120 - 142: Ensuring that the mode changes from seperated to contiguous
+when a different graphics colour is chosen.
+Line 146 - 195: Switching between single and double height mode, can see that
+the colour stays the same if the height change.  It only changes if the colour
+changes.
+Line 195 - 227: Making sure that the background colour can be updated when in
+graphics mode. The areas which are not 'LIT' can be filled in using the Background
+colour
+Line 229 - 231: Shows that the graphics mode resets when it gets to a new line
+Line 233 - 259: Shows the blast through text working in between graphics modes
+It also shows that the graphics does not continue onto a new line.
+Line 260 - 273: Blast through mode works correctly in double height.
+Line 275 - 289: Held graphics, checking it resets onto a new line.  It does not.
+Unfortunately it does not turn off until 'RELEASE' is found.
