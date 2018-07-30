@@ -1,5 +1,5 @@
 /*Teletext - Main*/
 
-To run test.m7, panda.m7, lfc.7:
+To run test.m7, panda.m7, lfc.m7:
 
 Make run
